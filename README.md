@@ -24,10 +24,11 @@ Example:
 Only stack frames which full qualified class name starts with `my.pkg1` or `my.pkg2.MyClass` will be logged by this pattern.
 
 A class name pattern can also be defined as a property.
+It's useful to list many prefixes keeping the pattern readable.
 
     <property name="appClassPrefixes" value="
-      controllers,
-      views
+      my.pkg1,
+      my.pkg2.MyClass
       "/>
     <pattern>%level - %logger - %message%n%appEx{${appClassPrefixes}}</pattern>
 
