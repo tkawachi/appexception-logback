@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'logback-clean-exception'
+rootProject.name = 'appexception'
