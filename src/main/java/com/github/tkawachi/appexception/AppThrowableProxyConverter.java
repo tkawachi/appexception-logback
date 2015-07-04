@@ -16,17 +16,26 @@ public class AppThrowableProxyConverter extends ThrowableHandlingConverter {
 
     List<String> printPrefixes = new ArrayList<String>();
 
-    @SuppressWarnings("unchecked")
+    @Override
     public void start() {
         final List<String> optionList = getOptionList();
 
-        if (optionList != null) {
+        if (optionList == null) {
+            printPrefixes = new ArrayList<String>();
+        } else {
             for (String anOptionList : optionList) {
                 printPrefixes.add(anOptionList);
             }
         }
 
         super.start();
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+
+        printPrefixes = new ArrayList<String>();
     }
 
     protected void extraData(StringBuilder builder, StackTraceElementProxy step) {
@@ -93,10 +102,6 @@ public class AppThrowableProxyConverter extends ThrowableHandlingConverter {
             } else {
                 ++ignoredCount;
             }
-        }
-        if (ignoredCount > 0) {
-            printIgnoredCount(buf, ignoredCount);
-            buf.append(CoreConstants.LINE_SEPARATOR);
         }
     }
 
