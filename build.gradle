@@ -10,11 +10,14 @@
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 
+group = "com.github.tkawachi"
+archivesBaseName = "appexception-logback"
+version = "0.0.1"
+
+
 // In this section you declare where to find the dependencies of your project
 repositories {
-    // Use 'jcenter' for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -27,4 +30,24 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+if (gradle.startParameter.taskNames.contains('uploadArchives')) {
+    apply from: 'build.publish.gradle'
 }
