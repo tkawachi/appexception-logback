@@ -89,32 +89,23 @@ public class AppThrowableProxyConverter extends ThrowableHandlingConverter {
 
     protected void subjoinSTEPArray(StringBuilder buf, int indent, IThrowableProxy tp) {
         StackTraceElementProxy[] stepArray = tp.getStackTraceElementProxyArray();
-
-        int ignoredCount = 0;
-        for (StackTraceElementProxy element : stepArray) {
+        int commonFrames = tp.getCommonFrames();
+        int maxIndex = stepArray.length - commonFrames;
+        for (int i = 0; i < maxIndex; i ++) {
+            StackTraceElementProxy element = stepArray[i];
             element.getStackTraceElement().getClassName();
 
             if (isAppLine(element)) {
                 ThrowableProxyUtil.indent(buf, indent);
-                printStackLine(buf, ignoredCount, element);
-                ignoredCount = 0;
+                printStackLine(buf, element);
                 buf.append(CoreConstants.LINE_SEPARATOR);
-            } else {
-                ++ignoredCount;
             }
         }
     }
 
-    private void printStackLine(StringBuilder buf, int ignoredCount, StackTraceElementProxy element) {
+    private void printStackLine(StringBuilder buf, StackTraceElementProxy element) {
         buf.append(element);
         extraData(buf, element); // allow other data to be added
-        if (ignoredCount > 0) {
-            printIgnoredCount(buf, ignoredCount);
-        }
-    }
-
-    private void printIgnoredCount(StringBuilder buf, int ignoredCount) {
-        buf.append(" [").append(ignoredCount).append(" skipped]");
     }
 
     private boolean isAppLine(StackTraceElementProxy element) {
