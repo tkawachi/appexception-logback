@@ -12,7 +12,7 @@ apply plugin: 'java'
 
 group = "com.github.tkawachi"
 archivesBaseName = "appexception-logback"
-version = "0.0.1"
+version = "0.0.2"
 
 
 // In this section you declare where to find the dependencies of your project
