@@ -13,7 +13,8 @@ Add following to `build.sbt` if you're using sbt:
 
 Add following to `logback.xml` under `<configuration>`:
 
-    <conversionRule conversionWord="appEx" converterClass="com.github.tkawachi.appexception.AppThrowableProxyConverter" />
+    <conversionRule conversionWord="appEx"
+      converterClass="com.github.tkawachi.appexception.AppThrowableProxyConverter" />
 
 Then `%appEx` can be used to format an exception in `<pattern>`.
 Example:
